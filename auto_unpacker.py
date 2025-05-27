@@ -152,13 +152,4 @@ def main():
             print(f"Details: {details}")
 
 if __name__ == "__main__":
-    # Check if python-magic and pefile are available
-    try:
-        import pefile
-        import magic
-    except ImportError:
-        print("Required libraries not found. Please install with:")
-        print("pip install pefile python-magic")
-        exit(1)
-        
     main()
