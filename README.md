@@ -13,6 +13,10 @@ Activate venv before running the script
 Run the script:
     python3 auto_unpacker.py samples
 
+Install die:
+    wget https://github.com/horsicq/DIE-engine/releases/download/3.10/die_3.10_Ubuntu_22.04_amd64.deb
+    dpkg -i die_3.10_Ubuntu_22.04_amd64.deb
+
 Create test files:
 
     mkdir samples
