@@ -61,8 +61,10 @@ class DieWrapper:
             
             if result.returncode != 0:
                 return None
-                
-            return json.loads(result.stdout)
+            if "[!]" in result.stdout: # fix the instability of the CLI output
+                return json.loads(result.stdout[result.stdout.index("\n")+1:])
+            else:
+                return json.loads(result.stdout)
         except (subprocess.SubprocessError, json.JSONDecodeError):
             return None
             
@@ -77,8 +79,8 @@ class DieWrapper:
             return None, None
             
         # Look for packer information in DIE results
-        for detector in die_results.get('detects', []):
-            if detector['type'].lower() == 'packer':
+        for detector in die_results.get('detects', [])[0]["values"]:
+            if "type" in detector and detector['type'].lower() == 'packer':
                 return detector['name'], die_results
                 
         return None, die_results
@@ -221,7 +223,7 @@ def generate_report(results: List[Tuple], output_file: Optional[str] = None) -> 
         if die_results and packer != 'None':
             report.append("\nDIE Findings:")
             for detect in die_results.get('detects', []):
-                if detect['type'].lower() in ['packer', 'protector', 'compiler']:
+                if "type" in detect and detect['type'].lower() in ['packer', 'protector', 'compiler']:
                     report.append(f"- {detect['name']} ({detect['type']})")
     
     full_report = "\n".join(report)
