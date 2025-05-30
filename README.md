@@ -8,7 +8,10 @@ Set up the venv:
     python3 -m venv .venv
 
 Activate venv before running the script
+  Linux
     source ./.venv/bin/activate
+  Windows
+    .venv/Scripts/Activate.ps1
 
 Run the script:
     python3 auto_unpacker.py samples
